@@ -10,6 +10,11 @@ botaoAdicionar.addEventListener('click',
         //Variaveis para acessar o valor do <input>
         var paciente = dadosPacientesFormulario(formulario);
         console.log(paciente);
+
+        if(!validarPaciente(paciente)){
+            console.log("paciente invalido");
+            return;
+        }
          //cria o elemento <tr>
         var pacienteTr = criaTR(paciente);
 
@@ -17,7 +22,7 @@ botaoAdicionar.addEventListener('click',
          
          var tabela = document.querySelector("#tabela-pacientes");
          tabela.appendChild(pacienteTr);
-         formulario.request();
+         formulario.reset();
     }
 );
 
@@ -56,9 +61,14 @@ function criaTd(dado, classes){
     return td;
 }
 
+function validarPaciente(paciente){
+     if(validarPeso(paciente.peso)){
+     return true;
+     }else{
+        return false;
+     }
 
-
-
+}
 
 
 
