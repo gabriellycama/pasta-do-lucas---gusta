@@ -11,11 +11,17 @@ botaoAdicionar.addEventListener('click',
         var paciente = dadosPacientesFormulario(formulario);
         console.log(paciente);
 
-        if(!validarPaciente(paciente)){
-            console.log("paciente invalido");
+        var erros = validarPaciente(paciente);
+
+        //impedir de adicionar o paciente
+        if(erros.length>0){
+
+            var mensagemErro = document.querySelector("#mensagem-erro");
+            mensagemErro.textContent = erros;
             return;
         }
          //cria o elemento <tr>
+    
         var pacienteTr = criaTR(paciente);
 
          //cria as tag <td>
@@ -35,7 +41,6 @@ function dadosPacientesFormulario(formulario){
         gordura: formulario.gordura.value,
         IMC: calculaIMC(formulario.peso.value, formulario.altura.value)
     }
-    console.log(pacientes);
 
     return paciente;
 }
@@ -44,6 +49,11 @@ function criaTR(paciente){
     var pacienteTr = document.createElement("tr");
     pacienteTr.classList.add("paciente");
 
+    if(!validarPaciente(paciente)){
+        return;
+     }
+
+      
     pacienteTr.appendChild(criaTd(paciente.nome, "info-nome"));
     pacienteTr.appendChild(criaTd(paciente.peso, "info-peso"));
     pacienteTr.appendChild(criaTd(paciente.altura, "info-altura"));
@@ -62,14 +72,21 @@ function criaTd(dado, classes){
 }
 
 function validarPaciente(paciente){
-     if(validarPeso(paciente.peso)){
-     return true;
-     }else{
-        return false;
-     }
 
+    var erros = [];
+
+
+
+     if(!validarPeso(paciente.peso)) erros.push ("se ta maluco ta uma pena em !");
+
+     
+     if(!validarAltura(paciente.altura)) erros.push ("se ta maluco ta uma pena em !");
+
+     
+
+     return erros;
 }
-
+ 
 
 
 
