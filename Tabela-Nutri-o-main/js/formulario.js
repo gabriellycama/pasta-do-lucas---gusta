@@ -4,28 +4,23 @@ botaoAdicionar.addEventListener('click',
     function(event){
         event.preventDefault();
         
-        //Seleciona a tag <form> a partir do id
+        //Seleciona a tag <form> a partir do id//
         var formulario = document.querySelector('#form-adiciona');
         
-        //Variaveis para acessar o valor do <input>
+        //Cria o elemento <tr> variaveis para acessar o valor do <input>//
         var paciente = dadosPacientesFormulario(formulario);
-        console.log(paciente);
+        var pacienteTr = criaTR(paciente);
 
         var erros = validarPaciente(paciente);
 
-        //impedir de adicionar o paciente
-        if(erros.length>0){
+        //Impede de adicionar o paciente e emite mensagem de erro//
+        console.log(erros);
+        if(erros.length > 0){
 
-            var mensagemErro = document.querySelector("#mensagem-erro");
-            mensagemErro.textContent = erros;
+            exibirMensagemErro(erros);
             return;
         }
-         //cria o elemento <tr>
-    
-        var pacienteTr = criaTR(paciente);
 
-         //cria as tag <td>
-         
          var tabela = document.querySelector("#tabela-pacientes");
          tabela.appendChild(pacienteTr);
          formulario.reset();
@@ -33,7 +28,7 @@ botaoAdicionar.addEventListener('click',
 );
 
 function dadosPacientesFormulario(formulario){
-    //objeto paciente 
+    //objeto paciente//
     var paciente = {
         nome: formulario.nome.value,
         peso: formulario.peso.value,
@@ -41,6 +36,7 @@ function dadosPacientesFormulario(formulario){
         gordura: formulario.gordura.value,
         IMC: calculaIMC(formulario.peso.value, formulario.altura.value)
     }
+    console.log(pacientes);
 
     return paciente;
 }
@@ -49,11 +45,6 @@ function criaTR(paciente){
     var pacienteTr = document.createElement("tr");
     pacienteTr.classList.add("paciente");
 
-    if(!validarPaciente(paciente)){
-        return;
-     }
-
-      
     pacienteTr.appendChild(criaTd(paciente.nome, "info-nome"));
     pacienteTr.appendChild(criaTd(paciente.peso, "info-peso"));
     pacienteTr.appendChild(criaTd(paciente.altura, "info-altura"));
@@ -67,7 +58,6 @@ function criaTd(dado, classes){
     var td = document.createElement("td");
     td.textContent = dado;
     td.classList.add(classes);
-
     return td;
 }
 
@@ -75,53 +65,25 @@ function validarPaciente(paciente){
 
     var erros = [];
 
-
-
-     if(!validarPeso(paciente.peso)) erros.push ("se ta maluco ta uma pena em !");
-
-     
-     if(!validarAltura(paciente.altura)) erros.push ("se ta maluco ta uma pena em !");
-
-     
-
-     return erros;
+    if(!validarPeso(paciente.peso)) erros.push("O peso inserido é inválido!");
+    
+    if(!validarAltura(paciente.altura)) erros.push("A altura inserida é inválida!");
+    
+    return erros;
 }
- 
 
+function exibirMensagemErro(erros){
+    //Quero adicionar cada item do array//
+    //Dentro da <ul>//
+    //Busca a tag <ul>//
+    let ul = document.querySelector("#mensagens-erro");
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    erros.forEach(function(erro){
+        //Primeiro criar uma <li>//
+        let li = document.createElement("li");
+        li.textContent = erro;
+        ul.appendChild(li);
+    });
+}
 
 
