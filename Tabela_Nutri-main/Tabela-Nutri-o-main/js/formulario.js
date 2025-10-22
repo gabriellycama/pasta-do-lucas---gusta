@@ -74,9 +74,9 @@ function validarPaciente(paciente){
 
     if(paciente.gordura.length == 0 )erros.push("gordura nao pode ser vazio!");
 
-    if(paciente.peso.length ==0 )erro.push("peso nao pode estar vazio!");
+    if(paciente.peso.length ==0 )erros.push("peso nao pode estar vazio!");
 
-    if(paciente.altura.length ==0 )erro.push("altura nao pode estar vazio!");
+    if(paciente.altura.length ==0 )erros.push("altura nao pode estar vazio!");
     
     return erros;
 }
